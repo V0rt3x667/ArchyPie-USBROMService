@@ -1,0 +1,45 @@
+# Maintainer: V0rt3x667 <al-g0l@outlook.com>
+
+pkgname=arpie-pmount
+pkgver=0.9.23
+pkgrel=1
+pkgdesc="Mount Removable Devices as a Non-Root User"
+arch=('x86_64' 'armv7h' 'aarch64')
+license=('GPL2')
+url="https://wiki.debian.org/pmount"
+backup=('etc/pmount.allow')
+depends=('sysfsutils>=2.0.0-1' 'util-linux')
+makedepends=('intltool')
+provides=('pmount')
+conflicts=('pmount')
+source=(
+  "https://alioth-archive.debian.org/releases/${pkgname##*-}/${pkgname##*-}/${pkgver}/${pkgname##*-}-${pkgver}.tar.bz2"
+  "01_fix_debug_segfault.patch"
+  "02_fix_exfat.patch"
+  "pmount-bash-completion"
+)
+sha256sums=('db38fc290b710e8e9e9d442da2fb627d41e13b3ee80326c15cc2595ba00ea036'
+            'e19eda4987b41f1b76281b980b56239b386539938d70e5b4a40b286bff789b93'
+            '6c90da5d992deea70334acaf6781df9d538887bd3d1b62e36a9449e0708006c0'
+            '2f3983432533d453cb1217b8e6804264e22fa689a0e73a2a4d8d11f0b704bacc')
+
+prepare() {
+  cd "${srcdir}/${pkgname##*-}-${pkgver}"
+  patch -p1 < "${srcdir}/01_fix_debug_segfault.patch"
+  patch -p1 < "${srcdir}/02_fix_exfat.patch"
+}
+
+build() {
+  cd "${srcdir}/${pkgname##*-}-${pkgver}"
+  ./configure \
+    --prefix=/usr \
+    --with-cryptsetup-prog=/usr/bin/cryptsetup
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname##*-}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+  install -Dm644 ${srcdir}/pmount-bash-completion ${pkgdir}/usr/share/bash-completion/completions/pmount
+  mkdir -p ${pkgdir}/media
+}

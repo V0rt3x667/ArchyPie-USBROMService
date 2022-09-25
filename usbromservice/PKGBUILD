@@ -1,0 +1,45 @@
+# Maintainer: V0rt3x667 <al-g0l@outlook.com>
+
+pkgname=arpie-usbromservice
+pkgver=0.0.24
+pkgrel=1
+pkgdesc="ArchyPie USB ROM Service"
+arch=('x86_64' 'armv7h' 'aarch64')
+license=('GPL3')
+url="https://github.com/V0rt3x667/ArchyPie-USBROMService"
+depends=(
+  'arpie-pmount'
+  'exfat-utils'
+  'lockfile-progs'
+  'ntfs-3g'
+  'rsync'
+)
+provides=('usbmount')
+conflicts=('usbmount')
+source=(
+  "00_create_model_symlink"
+  "00_remove_model_symlink"
+  "90-usbmount.rules"
+  "usbmount"
+  "usbmount.conf"
+  "usbmount@.service"
+)
+sha256sums=(
+  'cbb40ef9aa3204c21b679c6c9718564753a352e5b3d7954586fe58b236a75565'
+  'bba8355321c1d0186d6bc70d73ae931f35a3a61addff0adedb87adfbc856e44a'
+  '64d6bfe091d99b19bdee76ba6ff6b99a65aea5bfde19dc65ecc23b8db7a00281'
+  '2934b6ca0ed2cf0ed02f8c8fa9a793bcb73030c0d99cd415fdd62dcff74224c7'
+  'ebd74a56cdf6761e6628e6d93c844cb0b13bb7e879e3919b41a7b33ed9c04fe7'
+  '599d09d0fa85df3ab976a7b0f2e1c9f96d51ab49c88b655612f0ef9dbdc2e0ec'
+)
+
+package() {
+  cd "${srcdir}/${pkgname##*-}-${pkgver}" || exit
+
+  install -Dm755 00_create_model_symlink -t "${pkgdir}/etc/usbmount/mount.d/"
+  install -Dm755 00_remove_model_symlink -t "${pkgdir}/etc/usbmount/umount.d/"
+  install -Dm755 usbmount -t "${pkgdir}/usr/share/usbmount/"
+  install -Dm644 usbmount.conf -t "${pkgdir}/etc/usbmount/"
+  install -Dm644 90-usbmount.rules -t "${pkgdir}/usr/lib/udev/rules.d/"
+  install -Dm644 usbmount@.service -t "${pkgdir}/usr/lib/systemd/system/"
+}

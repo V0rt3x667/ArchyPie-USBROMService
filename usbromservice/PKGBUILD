@@ -34,7 +34,7 @@ sha256sums=(
 )
 
 package() {
-  cd "${srcdir}/${pkgname##*-}-${pkgver}" || exit
+  cd "${srcdir}/${pkgname##*-}" || exit
 
   install -Dm755 00_create_model_symlink -t "${pkgdir}/etc/usbmount/mount.d/"
   install -Dm755 00_remove_model_symlink -t "${pkgdir}/etc/usbmount/umount.d/"

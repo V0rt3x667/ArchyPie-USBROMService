@@ -4,7 +4,7 @@ pkgname=arpie-usbromservice
 pkgver=0.0.24
 pkgrel=1
 pkgdesc="ArchyPie USB ROM Service"
-arch=('x86_64' 'armv7h' 'aarch64')
+arch=('any')
 license=('GPL3')
 url="https://github.com/V0rt3x667/ArchyPie-USBROMService"
 depends=(
@@ -27,8 +27,8 @@ sha256sums=(
   'cbb40ef9aa3204c21b679c6c9718564753a352e5b3d7954586fe58b236a75565'
   'bba8355321c1d0186d6bc70d73ae931f35a3a61addff0adedb87adfbc856e44a'
   '64d6bfe091d99b19bdee76ba6ff6b99a65aea5bfde19dc65ecc23b8db7a00281'
-  '2934b6ca0ed2cf0ed02f8c8fa9a793bcb73030c0d99cd415fdd62dcff74224c7'
-  'ebd74a56cdf6761e6628e6d93c844cb0b13bb7e879e3919b41a7b33ed9c04fe7'
+  'SKIP'
+  'e6d51fceda500f81ed8c62ace140e65d4d80e78255a0099b2cad11f4cb40c385'
   '599d09d0fa85df3ab976a7b0f2e1c9f96d51ab49c88b655612f0ef9dbdc2e0ec'
 )
 
